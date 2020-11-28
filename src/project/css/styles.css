@@ -1,0 +1,68 @@
+/* General Configuration */
+html,body {
+    background-image: url(../images/background.png);
+    background-size: cover;
+    height: 100%;
+    font-family: 'Goldman', cursive!important;
+}
+/* Menu */
+.dropbtn {
+    background-color: transparent;
+    color: white;
+    font-size: 40px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    text-align: center;
+    right: -60px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #fff;
+    padding: 12px 16px;
+    background-color: rgba(0,0,0,0.5);
+    border-bottom: 2px solid transparent;
+    text-decoration: none;
+    display: block;
+    transition: 0.4s;
+}
+
+.dropdown-content a:hover {
+    transform: scale(1.05);
+    color: #FFC312!important;
+    background-color: rgba(0,0,0,0.8) !important;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    color: #FFC312;
+}
+
+.top-menu {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.title-menu {
+    text-align: center;
+    color: #fff;
+    padding: 7px;
+}
+
+.menu-menu {
+    padding: 7px;
+}
