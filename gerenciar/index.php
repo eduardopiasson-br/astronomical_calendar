@@ -36,7 +36,7 @@
             <h3>Administrativo</h3>
 
             <div class="menu-user">
-                <img src="../src/admin/images/astronaut.svg" alt="astronaut">
+                <img src="../src/admin/images/astronaut.png" alt="astronaut">
                 <span><?= $_SESSION['nome'] ?></span>
                 <a href="login/logoff.php">Sair</a>
             </div>
