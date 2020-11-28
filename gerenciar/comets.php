@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Gerenciar Satélites Naturais</title>
+    <title>Gerenciar Cometas</title>
 
     <!-- Css -->
     <link rel="stylesheet" href="../src/admin/css/styles.css">
@@ -32,10 +32,10 @@
         error_reporting(0);
         include_once("../config/conectar.php");
 
-        $query = 'SELECT GEN_NAME, GEN_CODE FROM GENERIC INNER JOIN SATELLITES ON GENERIC.GEN_CODE = SATELLITES.SAT_GEN_CODE;';
+        $query = 'SELECT GEN_NAME, GEN_CODE FROM GENERIC INNER JOIN COMETS ON GENERIC.GEN_CODE = COMETS.COM_GEN_CODE;';
         $sql_info_obj = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
         
-        $query2 = 'SELECT GENERIC.GEN_NAME, GENERIC.GEN_CODE, PLANETS.PLA_CODE FROM GENERIC, PLANETS WHERE GENERIC.GEN_CODE = PLANETS.PLA_GEN_CODE;';
+        $query2 = 'SELECT GENERIC.GEN_NAME, GENERIC.GEN_CODE, GALAXYS.GAL_CODE FROM GENERIC, GALAXYS WHERE GENERIC.GEN_CODE = GALAXYS.GAL_GEN_CODE;';
         $sql_info_associated = mysqli_query($conexao, $query2) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
         $associated = mysqli_fetch_assoc($sql_info_associated);
 
@@ -56,16 +56,16 @@
                     $sql_edit1 = mysqli_query($conexao, $query1) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
                     $DATA_GEN = mysqli_fetch_array($sql_edit1);
 
-                    $query2 = "SELECT * FROM SATELLITES WHERE SAT_GEN_CODE = '$codigo' ";
+                    $query2 = "SELECT * FROM COMETS WHERE COM_GEN_CODE = '$codigo' ";
                     $sql_edit2 = mysqli_query($conexao, $query2) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
                     $DATA_OBJ = mysqli_fetch_array($sql_edit2);
 
                 }
             ?>
-            <form id="satellites" name="Cadastro" action="../cadastros/satellites.php" method="POST">
+            <form id="comets" name="Cadastro" action="../cadastros/comets.php" method="POST">
                 <? if(isset($_GET['edit'])){ ?>
                     <input type="number" hidden name='GEN_CODE' value="<?php echo $DATA_GEN['GEN_CODE'] ?>">
-                    <input type="number" hidden name='SAT_CODE' value="<?php echo $DATA_OBJ['SAT_CODE'] ?>">
+                    <input type="number" hidden name='COM_CODE' value="<?php echo $DATA_OBJ['COM_CODE'] ?>">
                 <? } ?>
                     <label>Nome </label>
                     <input type="text" name="GEN_NAME" placeholder="Informe o nome do Sistema" value="<?php echo $DATA_GEN['GEN_NAME'] ?>"><br>
@@ -75,14 +75,14 @@
                     <input type="NUMBER" placeholder="Informe a distância do Sistema com relação ao Planeta Terra" name="GEN_DISTANCE" value="<?php echo $DATA_GEN['GEN_DISTANCE'] ?>"><br>
                     <label>Massa </label>
                     <input type="NUMBER" placeholder="Informe a massa do Sistema" name="GEN_MASS" value="<?php echo $DATA_GEN['GEN_MASS'] ?>"><br>
-                    <label>Horas por dia </label>
-                    <input type="text" placeholder="Informe o tempo de uma rotação completa" name="SAT_HOURS_DAY" value="<?php echo $DATA_OBJ['SAT_HOURS_DAY'] ?>"><br>
+                    <label>Data da Descoberta</label>
+                    <input type="date" placeholder="Informe o tempo de uma rotação completa" name="COM_DISCOVERY" value="<?php echo $DATA_OBJ['COM_DISCOVERY'] ?>"><br>
 
-                    <select class="select-form" name="SAT_PLA_CODE" id="SAT_PLA_CODE" form="satellites" required>
-                        <option value="">Selecione um planeta</option>
-                        <option value="0" <?php if(!empty($DATA_OBJ['SAT_CODE']) && is_null($DATA_OBJ['SAT_PLA_CODE'])) {?> selected <?php } ?>>Planeta não cadastrado</option>                                        
+                    <select class="select-form" name="COM_GAL_CODE" id="COM_GAL_CODE" form="comets" required>
+                        <option value="">Selecione uma galáxia de origem</option>
+                        <option value="0" <?php if(!empty($DATA_OBJ['COM_CODE']) && is_null($DATA_OBJ['COM_GAL_CODE'])) {?> selected <?php } ?>>Galáxia de origem não cadastrada</option>                                        
                         <?php while ($associated = mysqli_fetch_assoc($sql_info_associated)) : ?>
-                            <option <? if($DATA_OBJ['SAT_PLA_CODE'] == $associated['PLA_CODE']) { ?> selected <? } ?> title="<?php echo $associated['GEN_NAME'] ?>" value="<?php echo $associated['PLA_CODE'] ?>"><?php echo $associated['PLA_CODE'] ?> - <?php echo $associated['GEN_NAME'] ?></option>                    
+                            <option <? if($DATA_OBJ['COM_GAL_CODE'] == $associated['GAL_CODE']) { ?> selected <? } ?> title="<?php echo $associated['GEN_NAME'] ?>" value="<?php echo $associated['GAL_CODE'] ?>"><?php echo $associated['GAL_CODE'] ?> - <?php echo $associated['GEN_NAME'] ?></option>                    
                         <?php endwhile; ?>
                     </select>
                     <br>
@@ -92,7 +92,7 @@
                 <? } else { ?>
                     <input title="Salvar dados Modificados" class="btn-form green" type="submit" name="edit" value="Atualizar">
                     <input title="Limpar dados Inseridos" class="btn-form yellow" type="reset" name="reset" value="Limpar">
-                    <input title="Voltar para Sistemas" class="btn-form blue" type="button" onclick="location.href='satellites.php';" value="Voltar">
+                    <input title="Voltar para Sistemas" class="btn-form blue" type="button" onclick="location.href='comets.php';" value="Voltar">
                 <? } ?>
             </form>
 
@@ -100,7 +100,7 @@
 
         <!-- Dados Cadastrados -->
         <div class="col-md-6 div-info">
-            <h3>Satelites Cadastrados</h3>
+            <h3>Cometas Cadastrados</h3>
             <div class="table">
                 <table>
                     <tr>
@@ -114,8 +114,8 @@
                             <td><?php echo $object['GEN_NAME'] ?></td>
                             <!-- Botão para editar: envia (GET) para página php responsável por editar, o código do produto a ser recuperado apra edição -->
                             <td class="align-right">
-                                <a title="Editar" href="satellites.php?edit=<?php echo $object['GEN_CODE'] ?>" onclick="return confirm('Deseja Editar <?php echo $object['GEN_NAME'] ?>?');"><i class="fas fa-edit"></i></a>
-                                <a class="a-delete" title="Deletar" href="../cadastros/satellites.php?tabela_obj=SATELLITES&nomepk_obj=SAT_GEN_CODE&codigo_obj=<?php echo $object['GEN_CODE'] ?>&tabela_gen=GENERIC&nomepk_gen=GEN_CODE&codigo_gen=<?php echo $object['GEN_CODE'] ?>&origem=satellites.php" onclick="return confirm('Deseja Excluir <?php echo $object['GEN_NAME'] ?>?');"><i class="fas fa-trash-alt"></i></a>
+                                <a title="Editar" href="comets.php?edit=<?php echo $object['GEN_CODE'] ?>" onclick="return confirm('Deseja Editar <?php echo $object['GEN_NAME'] ?>?');"><i class="fas fa-edit"></i></a>
+                                <a class="a-delete" title="Deletar" href="../cadastros/comets.php?tabela_obj=COMETS&nomepk_obj=COM_GEN_CODE&codigo_obj=<?php echo $object['GEN_CODE'] ?>&tabela_gen=GENERIC&nomepk_gen=GEN_CODE&codigo_gen=<?php echo $object['GEN_CODE'] ?>&origem=comets.php" onclick="return confirm('Deseja Excluir <?php echo $object['GEN_NAME'] ?>?');"><i class="fas fa-trash-alt"></i></a>
                             </td>
 
                         </tr>

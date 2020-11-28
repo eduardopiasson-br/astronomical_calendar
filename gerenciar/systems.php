@@ -88,7 +88,7 @@
                     <!-- Galáxias -->
                     <select class="select-form" name="SYS_GAL_CODE" id="SYS_GAL_CODE" form="systems" required>
                         <option value="">Selecione uma galáxia</option>
-                        <option value="0" <?php if(!empty($DATA_SYS['SYS_CODE']) && is_null($DATA_SYS['SYS_GAL_CODE'])) {?> selected <? } ?>>Galáxia não cadastrada</option>                                        
+                        <option value="0" <?php if(!empty($DATA_SYS['SYS_CODE']) && is_null($DATA_SYS['SYS_GAL_CODE'])) {?> selected <?php } ?>>Galáxia não cadastrada</option>                                        
                         <?php while ($galaxys = mysqli_fetch_assoc($sql_info_gal)) : ?>
                             <option <? if($DATA_SYS['SYS_GAL_CODE'] == $galaxys['GAL_CODE']) { ?> selected <? } ?> title="<?php echo $galaxys['GEN_NAME'] ?>" value="<?php echo $galaxys['GAL_CODE'] ?>"><?php echo $galaxys['GAL_CODE'] ?> - <?php echo $galaxys['GEN_NAME'] ?></option>                    
                         <?php endwhile; ?>

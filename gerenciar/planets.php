@@ -80,7 +80,7 @@
 
                     <select class="select-form" name="PLA_STA_CODE" id="PLA_STA_CODE" form="planets" required>
                         <option value="">Selecione uma estrela</option>
-                        <option value="0" <?php if(!empty($DATA_OBJ['PLA_CODE']) && is_null($DATA_OBJ['PLA_STA_CODE'])) {?> selected <? } ?>>Estrela não cadastrada</option>                                        
+                        <option value="0" <?php if(!empty($DATA_OBJ['PLA_CODE']) && is_null($DATA_OBJ['PLA_STA_CODE'])) {?> selected <?php } ?>>Estrela não cadastrada</option>                                        
                         <?php while ($associated = mysqli_fetch_assoc($sql_info_associated)) : ?>
                             <option <? if($DATA_OBJ['PLA_STA_CODE'] == $associated['STA_CODE']) { ?> selected <? } ?> title="<?php echo $associated['GEN_NAME'] ?>" value="<?php echo $associated['STA_CODE'] ?>"><?php echo $associated['STA_CODE'] ?> - <?php echo $associated['GEN_NAME'] ?></option>                    
                         <?php endwhile; ?>

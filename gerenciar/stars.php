@@ -83,7 +83,7 @@
                     
                     <select class="select-form" name="STA_SYS_CODE" id="STA_SYS_CODE" form="stars" required>
                         <option value="">Selecione um Sistema</option>
-                        <option value="0" <?php if(!empty($DATA_OBJ['STA_CODE']) && is_null($DATA_OBJ['STA_SYS_CODE'])) {?> selected <? } ?>>Sistema não cadastrado</option>                                        
+                        <option value="0" <?php if(!empty($DATA_OBJ['STA_CODE']) && is_null($DATA_OBJ['STA_SYS_CODE'])) {?> selected <?php } ?>>Sistema não cadastrado</option>                                        
                         <?php while ($associated = mysqli_fetch_assoc($sql_info_associated)) : ?>
                             <option <? if($DATA_OBJ['STA_SYS_CODE'] == $associated['SYS_CODE']) { ?> selected <? } ?> title="<?php echo $associated['GEN_NAME'] ?>" value="<?php echo $associated['SYS_CODE'] ?>"><?php echo $associated['SYS_CODE'] ?> - <?php echo $associated['GEN_NAME'] ?></option>                    
                         <?php endwhile; ?>
