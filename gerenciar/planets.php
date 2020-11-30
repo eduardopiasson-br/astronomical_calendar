@@ -114,8 +114,8 @@
                             <td><?php echo $object['GEN_NAME'] ?></td>
                             <!-- Botão para editar: envia (GET) para página php responsável por editar, o código do produto a ser recuperado apra edição -->
                             <td class="align-right">
-                                <a title="Editar" href="PLANETS.php?edit=<?php echo $object['GEN_CODE'] ?>" onclick="return confirm('Deseja Editar <?php echo $object['GEN_NAME'] ?>?');"><i class="fas fa-edit"></i></a>
-                                <a class="a-delete" title="Deletar" href="../cadastros/PLANETS.php?tabela_obj=PLANETS&nomepk_obj=PLA_GEN_CODE&codigo_obj=<?php echo $object['GEN_CODE'] ?>&tabela_gen=GENERIC&nomepk_gen=GEN_CODE&codigo_gen=<?php echo $object['GEN_CODE'] ?>&origem=PLANETS.php" onclick="return confirm('Deseja Excluir <?php echo $object['GEN_NAME'] ?>?');"><i class="fas fa-trash-alt"></i></a>
+                                <a title="Editar" href="planets.php?edit=<?php echo $object['GEN_CODE'] ?>" onclick="return confirm('Deseja Editar <?php echo $object['GEN_NAME'] ?>?');"><i class="fas fa-edit"></i></a>
+                                <a class="a-delete" title="Deletar" href="../cadastros/planets.php?tabela_obj=PLANETS&nomepk_obj=PLA_GEN_CODE&codigo_obj=<?php echo $object['GEN_CODE'] ?>&tabela_gen=GENERIC&nomepk_gen=GEN_CODE&codigo_gen=<?php echo $object['GEN_CODE'] ?>&origem=planets.php" onclick="return confirm('Deseja Excluir <?php echo $object['GEN_NAME'] ?>?');"><i class="fas fa-trash-alt"></i></a>
                             </td>
 
                         </tr>

@@ -71,12 +71,12 @@
                 FENÔMENOS
             </a><br><br>
 
-            <a class="menu-item col-md-4" href="releases.php" title="Gerenciar Lançamentos">
-                LANÇAMENTOS
-            </a><br><br>
-
             <a class="menu-item col-md-4" href="missions.php" title="Gerenciar Missões">
                 MISSÕES
+            </a><br><br>
+
+            <a class="menu-item col-md-4" href="releases.php" title="Gerenciar Lançamentos">
+                LANÇAMENTOS
             </a><br><br>
             
         </div>
