@@ -35,7 +35,7 @@ td {
     padding: 1.5% 1.5% 5%; 
     vertical-align: initial; 
     padding: 1.5% 0; 
-    height: 75px; 
+    height: 74px;
 }
 
 .day:hover { 
@@ -43,13 +43,19 @@ td {
     cursor:pointer; 
 }
 
-.today { 
+#today { 
     color: #FFF; 
     background-color: rgba(0,0,0,.25) !important; 
 }
 
-span.number { 
+#number { 
     margin-left: 10% 
+}
+
+.day-calendar {
+    color: #fff;
+    text-align: center;
+    margin-left: 10%;
 }
 
 span.event { 

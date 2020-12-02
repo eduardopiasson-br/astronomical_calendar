@@ -66,3 +66,52 @@ html,body {
 .menu-menu {
     padding: 7px;
 }
+
+/* after calendar */
+
+.div-info-calendar {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.div-info-calendar p {
+    width: 33%;
+    color: #fff;
+    text-align: center;
+}
+
+/* form-index */
+
+.form-index {
+    display: flex;
+    text-align: center;
+    width: 100%;
+}
+
+.form-index form {
+    margin: 0 auto 10px;
+}
+
+.btn-form-index:hover {
+    background-color: #FFC312;
+    transform: 0.4s;
+}
+
+/* Information */
+
+.info-div-date {
+    background-image: linear-gradient( rgba(0,0,0,0.8), transparent);
+}
+
+.info-div-date h2 {
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+.info-details {
+    margin: 10px;
+    color: #fff;
+    background-color: #000;
+}
