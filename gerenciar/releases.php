@@ -34,15 +34,12 @@
 
         $query = 'SELECT * FROM RELEASES;';
         $sql_info_obj = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $releases = mysqli_fetch_assoc($sql_info_obj);
 
         $query2 = 'SELECT * FROM PHENOMENA;';
         $sql_info_phenomena = mysqli_query($conexao, $query2) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $phenomena = mysqli_fetch_assoc($sql_info_phenomena);
 
         $query3 = 'SELECT * FROM MISSIONS;';
         $sql_info_missions = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $missions = mysqli_fetch_assoc($sql_info_missions);
 
 
         include_once 'login/validlogin.php';

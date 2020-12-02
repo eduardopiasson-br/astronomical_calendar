@@ -34,31 +34,24 @@
 
         $query = 'SELECT * FROM MISSIONS;';
         $sql_info_obj = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $missions = mysqli_fetch_assoc($sql_info_obj);
 
         $query2 = 'SELECT GENERIC.GEN_NAME, GENERIC.GEN_CODE, GALAXYS.GAL_CODE FROM GENERIC, GALAXYS WHERE GENERIC.GEN_CODE = GALAXYS.GAL_GEN_CODE;';
         $sql_info_galaxys = mysqli_query($conexao, $query2) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $galaxys = mysqli_fetch_assoc($sql_info_galaxys);
 
         $query3 = 'SELECT GENERIC.GEN_NAME, GENERIC.GEN_CODE, SYSTEMS.SYS_CODE FROM GENERIC, SYSTEMS WHERE GENERIC.GEN_CODE = SYSTEMS.SYS_GEN_CODE;';
         $sql_info_systems = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $systems = mysqli_fetch_assoc($sql_info_systems);
 
         $query4 = 'SELECT GENERIC.GEN_NAME, GENERIC.GEN_CODE, STARS.STA_CODE FROM GENERIC, STARS WHERE GENERIC.GEN_CODE = STARS.STA_GEN_CODE;';
         $sql_info_stars = mysqli_query($conexao, $query4) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $stars = mysqli_fetch_assoc($sql_info_stars);
 
         $query5 = 'SELECT GENERIC.GEN_NAME, GENERIC.GEN_CODE, PLANETS.PLA_CODE FROM GENERIC, PLANETS WHERE GENERIC.GEN_CODE = PLANETS.PLA_GEN_CODE;';
         $sql_info_planets = mysqli_query($conexao, $query5) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $planets = mysqli_fetch_assoc($sql_info_planets);
 
         $query6 = 'SELECT GENERIC.GEN_NAME, GENERIC.GEN_CODE, SATELLITES.SAT_CODE FROM GENERIC, SATELLITES WHERE GENERIC.GEN_CODE = SATELLITES.SAT_GEN_CODE;';
         $sql_info_satellites = mysqli_query($conexao, $query6) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $satellites = mysqli_fetch_assoc($sql_info_satellites);
 
         $query7 = 'SELECT GENERIC.GEN_NAME, GENERIC.GEN_CODE, COMETS.COM_CODE FROM GENERIC, COMETS WHERE GENERIC.GEN_CODE = COMETS.COM_GEN_CODE;';
         $sql_info_comets = mysqli_query($conexao, $query7) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $comets = mysqli_fetch_assoc($sql_info_comets);
 
         include_once 'login/validlogin.php';
     ?>

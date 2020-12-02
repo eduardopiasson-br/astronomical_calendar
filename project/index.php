@@ -22,7 +22,8 @@ function MostreSemanas()
 	$weeks = "DSTQQSS";
 
 	for ($i = 0; $i < 7; $i++)
-		echo "<th>" . $weeks{$i} . "</th>";
+		echo "<th>" . $weeks{
+		$i} . "</th>";
 }
 
 function GetNumeroDias($month = NULL, $year = NULL)
@@ -39,10 +40,31 @@ function GetNumeroDias($month = NULL, $year = NULL)
 	return $num_days[$month];
 }
 
-function MostreCalendario($day = NULL, $month = NULL, $year = NULL)
+function MostreCalendario($day = NULL, $month = NULL, $year = NULL, $conexao)
 {
 	$num_days = GetNumeroDias($month, $year);	// retorna o n�mero de dias que tem o mes desejado
 	$current_day = 0;
+
+	error_reporting(0);
+	include_once("../config/conectar.php");
+
+	$query_phenomena = "SELECT * FROM PHENOMENA WHERE PHE_DATE = '$year-$month-$day'";
+	$sql_info_phenomena = mysqli_query($conexao, $query_phenomena) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+	$phenomena = mysqli_fetch_assoc($sql_info_phenomena);
+
+	$query_mission = "SELECT * FROM MISSIONS WHERE MIS_DATE = '$year-$month-$day'";
+	$sql_info_mission = mysqli_query($conexao, $query_mission) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+	$missions = mysqli_fetch_assoc($sql_info_mission);
+
+	$query_releases = "SELECT * FROM RELEASES WHERE REL_DATE = '$year-$month-$day'";
+	$sql_info_releases = mysqli_query($conexao, $query_releases) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+	$releases = mysqli_fetch_assoc($sql_info_releases);
+
+	$data = array(
+		'phenomena' => $phenomena,
+		'missions' => $missions,
+		'releases' => $releases
+	);
 
 	$day_week = jddayofweek(cal_to_jd(CAL_GREGORIAN, $month, '01', $year), 0);	// fun��o que descobre o dia da semana
 
@@ -82,8 +104,6 @@ function MostreCalendario($day = NULL, $month = NULL, $year = NULL)
 					echo " ";
 				} else {
 					error_reporting(0);
-					include_once("../config/conectar.php");
-
 					$day_select = $current_day + 1;
 					$query_phenomena = "SELECT * FROM PHENOMENA WHERE PHE_DATE = '$year-$month-$day_select'";
 					$sql_info_phenomena = mysqli_query($conexao, $query_phenomena) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
@@ -122,6 +142,7 @@ function MostreCalendario($day = NULL, $month = NULL, $year = NULL)
 	}
 
 	echo "</table>";
+	return $data;
 }
 
 function MostreCalendarioCompleto()
@@ -169,7 +190,25 @@ function MostreCalendarioCompleto()
 
 <body>
 
-	<sectio class="col-md-12 col-sm-12 top-menu">
+	<?php
+	ini_set('default_charset', 'UTF-8');
+
+	error_reporting(0);
+	include_once("../config/conectar.php");
+
+	$conexao = $conexao;
+
+	$query_phenomena = "SELECT * FROM PHENOMENA WHERE PHE_DATE = '$year-$month-$day'";
+	$sql_info_phenomena = mysqli_query($conexao, $query_phenomena) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+
+	$query_mission = "SELECT * FROM MISSIONS WHERE MIS_DATE = '$year-$month-$day'";
+	$sql_info_mission = mysqli_query($conexao, $query_mission) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+
+	$query_releases = "SELECT * FROM RELEASES WHERE REL_DATE = '$year-$month-$day'";
+	$sql_info_releases = mysqli_query($conexao, $query_releases) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+	?>
+
+	<section class="row top-menu">
 		<div class="col-md-11 col-sm-11 title-menu">
 			<h1>Calendário Astronômico</h1>
 		</div>
@@ -177,53 +216,57 @@ function MostreCalendarioCompleto()
 			<div class="dropdown">
 				<button class="dropbtn"><i class="fas fa-caret-square-down"></i></button>
 				<div class="dropdown-content">
-					<a href="#">Galáxias</a>
-					<a href="#">Sistemas</a>
-					<a href="#">Estrelas</a>
-					<a href="#">Planetas</a>
-					<a href="#">Satelites</a>
-					<a href="#">Cometas</a>
-					<a href="#">Fenomenos</a>
-					<a href="#">Missões</a>
-					<a href="#">Lançamentos</a>
+					<a href="galaxys.php">Galáxias</a>
+					<a href="systems.php">Sistemas</a>
+					<a href="stars.php">Estrelas</a>
+					<a href="planets.php">Planetas</a>
+					<a href="satellites.php">Satelites</a>
+					<a href="comets.php">Cometas</a>
+					<a href="phenomena.php">Fenomenos</a>
+					<a href="missions.php">Missões</a>
+					<a href="releases.php">Lançamentos</a>
 				</div>
 			</div>
 		</div>
-		</section>
+	</section>
 
-		<section style="display: flex;" class="col-md-12 col-sm-12">
-			<div class="col-md-7 col-12">
-				<div class="form-index">
-					<form action="index.php" method="POST">
-						<input type="date" name="DATE" id="date"?>">
-						<input title="Selecionar Data" class="btn-form-index" type="submit" name="date" value="Buscar">
-					</form>
+	<section class="row">
+		<div class="col-md-7 col-12 col-sm-12">
+			<div class="form-index">
+				<form action="index.php" method="POST">
+					<input type="date" name="DATE" id="date" ?>
+					<input class="button-calendar button-form" title="Selecionar Data" class="btn-form-index" type="submit" name="date" value="Buscar">
+				</form>
+			</div>
+			<?php
+			MostreCalendario($day, $month, $year, $conexao);
+			?>
+			<div class="div-info-calendar">
+				<p>FENÔMENOS <span class='event' style='background-color:#da5f5f;'></span></p>
+				<p>MISSÕES <span class='event' style='background-color:#5a9ab2;'></span></p>
+				<p>LANÇAMENTOS <span class='event' style='background-color:#91c33b;'></span></p>
+			</div>
+
+		</div>
+		<div class="col-md-5 col-sm-12 col-12 info-div-date">
+			<h2><?= "$day / $month / $year" ?></h2>
+			<?php while ($phenomena = mysqli_fetch_assoc($sql_info_phenomena)) :  ?>
+				<div class="itm-info"><i class="fas fa-sun"> </i>
+					<p> <?php echo ($phenomena['PHE_NAME']) ?></p>
 				</div>
-				<?php
-				MostreCalendario($day, $month, $year);
-				?>
-				<div class="div-info-calendar">
-					<p>FENÔMENOS <span class='event' style='background-color:#da5f5f;'></span></p>
-					<p>MISSÕES <span class='event' style='background-color:#5a9ab2;'></span></p>
-					<p>LANÇAMENTOS <span class='event' style='background-color:#91c33b;'></span></p>
+			<?php endwhile; ?>
+			<?php while ($missions = mysqli_fetch_assoc($sql_info_mission)) :  ?>
+				<div class="itm-info"><i class="fab fa-galactic-republic"> </i>
+					<p> <?php echo ($missions['MIS_NAME']) ?></p>
 				</div>
-
-			</div>
-			<div class="col-md-5 col-12 info-div-date">
-				<h2><?= "$day / $month / $year" ?></h2>
-				<?php while ($phe = mysqli_fetch_assoc($sql_info_phenomena)) { ?>
-					<div class="info-details">
-						<?= $phe['PHE_ID'] ?>
-					</div>
-				<?php } ?>
-
-			</div>
-
-			<!-- Day informations -->
-			<div class="col-md-5 col-12">
-
-			</div>
-		</section>
+			<?php endwhile; ?>
+			<?php while ($releases = mysqli_fetch_assoc($sql_info_releases)) :  ?>
+				<div class="itm-info"><i class="fas fa-rocket"></i>
+					<p> <?php echo ($releases['REL_NAME']) ?></p>
+				</div>
+			<?php endwhile; ?>
+		</div>
+	</section>
 
 </body>
 

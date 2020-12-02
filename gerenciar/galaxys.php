@@ -31,9 +31,6 @@
 
         error_reporting(0);
         include_once("../config/conectar.php");
-
-        // $query = 'SELECT * FROM GENERIC;';
-        // $sql_info_gen = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
         
         $query = 'SELECT GEN_NAME, GEN_CODE FROM GENERIC INNER JOIN GALAXYS ON GENERIC.GEN_CODE = GALAXYS.GAL_GEN_CODE;';
         $sql_info_gal = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));

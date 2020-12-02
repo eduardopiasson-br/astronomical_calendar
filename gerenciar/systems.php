@@ -40,7 +40,6 @@
         
         $query2 = 'SELECT GENERIC.GEN_NAME, GENERIC.GEN_CODE, GALAXYS.GAL_CODE FROM GENERIC, GALAXYS WHERE GENERIC.GEN_CODE = GALAXYS.GAL_GEN_CODE;';
         $sql_info_gal = mysqli_query($conexao, $query2) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-        $galaxys = mysqli_fetch_assoc($sql_info_gal);
 
         include_once 'login/validlogin.php';
     ?>
