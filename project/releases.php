@@ -7,6 +7,7 @@
 
         <!-- Css -->
 	<link rel="stylesheet" href="../src/project/css/styles.css">
+	<link rel="stylesheet" href="../src/project/css/responsive.css">
 	<!-- Bootstrap Css -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<!-- Flaticon -->
@@ -16,8 +17,10 @@
 	<!-- Font-Family -->
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Goldman&display=swap" rel="stylesheet">
+	
 </head>
 <body>
+	<!-- Conexão e busca de dados no banco -->
     <?php
         ini_set('default_charset', 'UTF-8');
 
@@ -28,7 +31,10 @@
         $sql_info = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
     ?>
 
+	<!-- Seçao de menu -->
     <section class="col-md-12 col-sm-12 top-menu">
+
+		<!-- Divs menu e de recarga -->
         <div class="col-md-11 col-sm-11 title-menu">
             <a class="button-calendar" href="index.php" title="Ir para o calendário"> <i class="fas fa-calendar"></i> Calendário</a>
 			<h1>Calendário Astronômico - <span>Lançamentos</span</h1>
@@ -51,9 +57,10 @@
 		</div>
     </section>
 
+	<!-- Section principal onde são exibidos os dados -->
     <section class="col-md-12">
         <div class="col-md-12">
-			<div class="col-md-12 col-sm-12 div-infos top-infos">
+			<div class="col-md-12 col-sm-12 div-infos top-infos desktop">
 				<div class="col-md-2"> Nome <br> Data</div>
 				<div class="col-md-2"> Companhia</div>
 				<div class="col-md-3"> Descrição <br> da Missão</div>
@@ -61,7 +68,8 @@
                 <div class="col-md-3"> Associações</div>
 			</div>
 			<?php while ($dado = mysqli_fetch_assoc($sql_info)) : ?>
-				<div class="col-md-12 col-sm-12 div-infos infos">
+				<!-- Informação Desktop -->
+				<div class="col-md-12 col-sm-12 div-infos infos desktop">
 					<div class="col-md-2"><p><?php echo $dado['REL_NAME'] ?><br><?php echo $dado['REL_DATE'] ?></p></div>
 					<div class="col-md-2"><p><?php echo $dado['REL_COMPANY'] ?></p></div>
 					<div class="col-md-3 description-info"><p><?php echo $dado['REL_DESCRIPTION'] ?></p></div>
@@ -75,10 +83,10 @@
                             $assoc = mysqli_fetch_array($sql_associated); $associa1 = $assoc['REP_PHE_CODE'];
                             $query3 = "SELECT PHE_NAME FROM PHENOMENA WHERE PHENOMENA.PHE_CODE = '$associa1;'";
                             $sql_associated2 = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-                            $associated = mysqli_fetch_array($sql_associated2);
+                            $associated1 = mysqli_fetch_array($sql_associated2);
                         ?>
                         <p>
-                            <?php echo $associated['PHE_NAME'] ?>
+                            <?php echo $associated1['PHE_NAME'] ?>
                         </p>
 
                         <?php 
@@ -88,13 +96,41 @@
 						$assoc = mysqli_fetch_array($sql_associated); $associa1 = $assoc['REM_MIS_CODE'];
 						$query3 = "SELECT MIS_NAME FROM MISSIONS WHERE MISSIONS.MIS_CODE = '$associa1;'";
 						$sql_associated2 = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-						$associated = mysqli_fetch_array($sql_associated2);
+						$associated2 = mysqli_fetch_array($sql_associated2);
 					?>
 					<p>
-						<?php echo $associated['MIS_NAME'] ?>
+						<?php echo $associated2['MIS_NAME'] ?>
 					</p>
 
                     </div>
+				</div>
+				<!-- Informaçao Mobile -->
+				<div class="col-md-12 col-sm-12 div-infos infos mobile">
+					<div>
+						<span>Nome: </span><p><?php echo $dado['REL_NAME'] ?></p>
+					</div>
+					<div>
+						<span>Data: </span><p><?php echo $dado['REL_DATE'] ?></p>
+					</div>
+					<div>
+						<span>Descrição: </span><p><?php echo $dado['REL_DESCRIPTION'] ?></p>
+					</div>
+					<div>
+						<span>Companhia: </span><p><?php echo $dado['REL_COMPANY'] ?></p>
+					</div>
+					<div>
+						<span>Origem: </span><p><?php echo $dado['REL_LOCAL'] ?></p>
+					</div>
+					<div>
+						<span>Destino: </span><p><?php echo $dado['REL_DESTINY'] ?></p>
+					</div>
+					<div>
+						<span>Associações: </span>
+						<p>
+							<?php echo $associated1['PHE_NAME'] ?><br>
+							<?php echo $associated2['MIS_NAME'] ?><br>
+						</p>
+					</div>
 				</div>
             <?php endwhile; ?>
         </div>

@@ -3,10 +3,11 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Página Inicial</title>
+    <title>Página Inicial | Gerenciar</title>
 
     <!-- Css -->
     <link rel="stylesheet" href="../src/admin/css/styles.css">
+    <link rel="stylesheet" href="../src/admin/css/responsive.css">
     <!-- Bootstrap Css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- Flaticon -->
@@ -27,58 +28,62 @@
 
 <body>
     <?php
-        include_once 'login/validlogin.php';
+    include_once 'login/validlogin.php';
     ?>
 
-    <section class="section-general">
+    <!-- Seção de apresentação do sistema administrativo -->
+    <section class="section-general row">
         <div class="menu-top">
             <h1>CALENDÁRIO ASTRONÔMICO</h1>
             <h3>Administrativo</h3>
 
+            <!-- Informações do usuário -->
             <div class="menu-user">
                 <img src="../src/admin/images/astronaut.png" alt="astronaut">
                 <span><?= $_SESSION['nome'] ?></span>
                 <a href="login/logoff.php">Sair</a>
             </div>
         </div>
-        <div class="menu">
 
-            <a class="menu-item col-md-4" href="galaxys.php" title="Gerenciar Galáxias">
+        <!-- Menus disponíveis -->
+        <div class="menu col-md-12 col-sm-12 col-12">
+
+            <a class="menu-item col-md-4 col-sm-12 col-12" href="galaxys.php" title="Gerenciar Galáxias">
                 GALÁXIAS
-            </a><br><br>
+            </a>
 
-            <a class="menu-item col-md-4" href="systems.php" title="Gerenciar Sistemas Planetários">
+            <a class="menu-item col-md-4 col-sm-12 col-12" href="systems.php" title="Gerenciar Sistemas Planetários">
                 SISTEMAS
-            </a><br><br>
+            </a>
 
-            <a class="menu-item col-md-4" href="stars.php" title="Gerenciar Estrelas">
+            <a class="menu-item col-md-4 col-sm-12 col-12" href="stars.php" title="Gerenciar Estrelas">
                 ESTRELAS
-            </a><br><br>
+            </a>
 
-            <a class="menu-item col-md-4" href="planets.php" title="Gerenciar Planetas">
+            <a class="menu-item col-md-4 col-sm-12 col-12" href="planets.php" title="Gerenciar Planetas">
                 PLANETAS
-            </a><br><br>
+            </a>
 
-            <a class="menu-item col-md-4" href="satellites.php" title="Gerenciar Satélites Naturais">
+            <a class="menu-item col-md-4 col-sm-12 col-12" href="satellites.php" title="Gerenciar Satélites Naturais">
                 SATÉLITES
-            </a><br><br>
+            </a>
 
-            <a class="menu-item col-md-4" href="comets.php" title="Gerenciar Cometas">
+            <a class="menu-item col-md-4 col-sm-12 col-12" href="comets.php" title="Gerenciar Cometas">
                 COMETAS
-            </a><br><br>
+            </a>
 
-            <a class="menu-item col-md-4" href="phenomena.php" title="Gerenciar Fenômenos">
+            <a class="menu-item col-md-4 col-sm-12 col-12" href="phenomena.php" title="Gerenciar Fenômenos">
                 FENÔMENOS
-            </a><br><br>
+            </a>
 
-            <a class="menu-item col-md-4" href="missions.php" title="Gerenciar Missões">
+            <a class="menu-item col-md-4 col-sm-12 col-12" href="missions.php" title="Gerenciar Missões">
                 MISSÕES
-            </a><br><br>
+            </a>
 
-            <a class="menu-item col-md-4" href="releases.php" title="Gerenciar Lançamentos">
+            <a class="menu-item col-md-4 col-sm-12 col-12" href="releases.php" title="Gerenciar Lançamentos">
                 LANÇAMENTOS
-            </a><br><br>
-            
+            </a>
+
         </div>
     </section>
 </body>

@@ -7,6 +7,7 @@
 
         <!-- Css -->
 	<link rel="stylesheet" href="../src/project/css/styles.css">
+	<link rel="stylesheet" href="../src/project/css/responsive.css">
 	<!-- Bootstrap Css -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<!-- Flaticon -->
@@ -18,6 +19,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Goldman&display=swap" rel="stylesheet">
 </head>
 <body>
+	
+	<!-- Conexão e busca de dados no banco -->
     <?php
         ini_set('default_charset', 'UTF-8');
 
@@ -28,7 +31,10 @@
         $sql_info = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
     ?>
 
+	<!-- Seçao de menu -->
     <section class="col-md-12 col-sm-12 top-menu">
+
+		<!-- Divs menu e de recarga -->
         <div class="col-md-11 col-sm-11 title-menu">
             <a class="button-calendar" href="index.php" title="Ir para o calendário"> <i class="fas fa-calendar"></i> Calendário</a>
 			<h1>Calendário Astronômico - <span>Cometas</span</h1>
@@ -51,16 +57,18 @@
 		</div>
     </section>
 
+	<!-- Section principal onde são exibidos os dados -->
     <section class="col-md-12">
         <div class="col-md-12">
-			<div class="col-md-12 col-sm-12 div-infos top-infos">
+			<div class="col-md-12 col-sm-12 div-infos top-infos desktop">
 				<div class="col-md-3"> Nome -  Descoberta</div>
 				<div class="col-md-3"> Descrição do Cometa</div>
 				<div class="col-md-3"> Distância da Terra - Massa</div>
 				<div class="col-md-3"> Galáxia de Origem</div>
 			</div>
 			<?php while ($dado = mysqli_fetch_assoc($sql_info)) : ?>
-				<div class="col-md-12 col-sm-12 div-infos infos">
+				<!-- Informação Desktop -->
+				<div class="col-md-12 col-sm-12 div-infos infos desktop">
 					<div class="col-md-3">
 						<p><?php echo $dado['GEN_NAME'] ?> - <?php echo $dado['COM_DISCOVERY'] ?></p>
 					</div>
@@ -69,6 +77,8 @@
                         <p><?php echo $dado['GEN_DISTANCE'] ?> Kms - <?php echo $dado['GEN_MASS'] ?></p>
                     </div>
                     <div class="col-md-3">
+
+					<!-- Carregamento de elemento de tabéla associada -->
                         <?php 
                             $code =  $dado['COM_GAL_CODE'];
                             $query2 = "SELECT GAL_GEN_CODE FROM GALAXYS WHERE GALAXYS.GAL_CODE = '$code';";
@@ -84,6 +94,28 @@
                             <?php echo $associated['GEN_NAME'] ?>
                         </p>
                     </div>
+				</div>
+
+				<!-- Informaçao Mobile -->
+				<div class="col-md-12 col-sm-12 div-infos infos mobile">
+					<div>
+						<span>Nome: </span><p><?php echo $dado['GEN_NAME'] ?></p>
+					</div>
+					<div>
+						<span>Descoberta: </span><p><?php echo $dado['COM_DISCOVERY'] ?></p>
+					</div>
+					<div>
+						<span>Descrição: </span><p><?php echo $dado['GEN_DESCRIPTION'] ?></p>
+					</div>
+					<div>
+						<span>Distância da Terra: </span><p><?php echo $dado['GEN_DISTANCE'] ?></p>
+					</div>
+					<div>
+						<span>Massa: </span><p><?php echo $dado['GEN_MASS'] ?></p>
+					</div>
+					<div>
+						<span>Galáxia de Origem: </span><p><?php echo $associated['GEN_NAME'] ?></p>
+					</div>
 				</div>
             <?php endwhile; ?>
         </div>

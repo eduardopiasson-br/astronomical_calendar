@@ -6,7 +6,8 @@
     <title>Missões | Calendário Astronômico</title>
 
         <!-- Css -->
-	<link rel="stylesheet" href="../src/project/css/styles.css">
+    <link rel="stylesheet" href="../src/project/css/styles.css">
+    <link rel="stylesheet" href="../src/project/css/responsive.css">
 	<!-- Bootstrap Css -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<!-- Flaticon -->
@@ -18,6 +19,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Goldman&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Conexão e busca de dados no banco -->
     <?php
         ini_set('default_charset', 'UTF-8');
 
@@ -28,7 +30,10 @@
         $sql_info = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
     ?>
 
+	<!-- Seçao de menu -->
     <section class="col-md-12 col-sm-12 top-menu">
+
+        <!-- Divs menu e de recarga -->
         <div class="col-md-11 col-sm-11 title-menu">
             <a class="button-calendar" href="index.php" title="Ir para o calendário"> <i class="fas fa-calendar"></i> Calendário</a>
 			<h1>Calendário Astronômico - <span>Missões</span</h1>
@@ -51,17 +56,19 @@
 		</div>
     </section>
 
+	<!-- Section principal onde são exibidos os dados -->
     <section class="col-md-12">
         <div class="col-md-12">
-			<div class="col-md-12 col-sm-12 div-infos top-infos">
+			<div class="col-md-12 col-sm-12 div-infos top-infos desktop">
 				<div class="col-md-2"> Nome <br> Companhia</div>
 				<div class="col-md-3"> Descrição <br> da Missão</div>
 				<div class="col-md-2"> Origem <br> Destino</div>
                 <div class="col-md-2"> Objetivo <br> Data</div>
                 <div class="col-md-3"> Associações</div>
 			</div>
-			<?php while ($dado = mysqli_fetch_assoc($sql_info)) : ?>
-				<div class="col-md-12 col-sm-12 div-infos infos">
+            <?php while ($dado = mysqli_fetch_assoc($sql_info)) : ?>
+                <!-- Informação Desktop -->
+				<div class="col-md-12 col-sm-12 div-infos infos desktop">
 					<div class="col-md-2">
 						<p><?php echo $dado['MIS_NAME'] ?><br><?php echo $dado['MIS_COMPANY'] ?></p>
 					</div>
@@ -80,10 +87,10 @@
                             $associated2 = mysqli_fetch_array($sql_associated2); $associa2 = $associated2['GAL_GEN_CODE'];
                             $query3 = "SELECT GEN_NAME FROM GENERIC WHERE GENERIC.GEN_CODE = '$associa2;'";
                             $sql_gen = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-                            $associated = mysqli_fetch_array($sql_gen);
+                            $associated1 = mysqli_fetch_array($sql_gen);
                         ?>
                         <p>
-                            <?php echo $associated['GEN_NAME'] ?>
+                            <?php echo $associated1['GEN_NAME'] ?>
                         </p>
 
                         <?php 
@@ -96,10 +103,10 @@
                             $associated2 = mysqli_fetch_array($sql_associated2); $associa2 = $associated2['SYS_GEN_CODE'];
                             $query3 = "SELECT GEN_NAME FROM GENERIC WHERE GENERIC.GEN_CODE = '$associa2;'";
                             $sql_gen = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-                            $associated = mysqli_fetch_array($sql_gen);
+                            $associated2 = mysqli_fetch_array($sql_gen);
                         ?>
                         <p>
-                            <?php echo $associated['GEN_NAME'] ?>
+                            <?php echo $associated2['GEN_NAME'] ?>
                         </p>
 
                         <?php 
@@ -112,10 +119,10 @@
                             $associated2 = mysqli_fetch_array($sql_associated2); $associa2 = $associated2['STA_GEN_CODE'];
                             $query3 = "SELECT GEN_NAME FROM GENERIC WHERE GENERIC.GEN_CODE = '$associa2;'";
                             $sql_gen = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-                            $associated = mysqli_fetch_array($sql_gen);
+                            $associated3 = mysqli_fetch_array($sql_gen);
                         ?>
                         <p>
-                            <?php echo $associated['GEN_NAME'] ?>
+                            <?php echo $associated3['GEN_NAME'] ?>
                         </p>
 
                         <?php 
@@ -128,10 +135,10 @@
                             $associated2 = mysqli_fetch_array($sql_associated2); $associa2 = $associated2['PLA_GEN_CODE'];
                             $query3 = "SELECT GEN_NAME FROM GENERIC WHERE GENERIC.GEN_CODE = '$associa2;'";
                             $sql_gen = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-                            $associated = mysqli_fetch_array($sql_gen);
+                            $associated4 = mysqli_fetch_array($sql_gen);
                         ?>
                         <p>
-                            <?php echo $associated['GEN_NAME'] ?>
+                            <?php echo $associated4['GEN_NAME'] ?>
                         </p>
 
                         <?php 
@@ -144,10 +151,10 @@
                             $associated2 = mysqli_fetch_array($sql_associated2); $associa2 = $associated2['SAT_GEN_CODE'];
                             $query3 = "SELECT GEN_NAME FROM GENERIC WHERE GENERIC.GEN_CODE = '$associa2;'";
                             $sql_gen = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-                            $associated = mysqli_fetch_array($sql_gen);
+                            $associated5 = mysqli_fetch_array($sql_gen);
                         ?>
                         <p>
-                            <?php echo $associated['GEN_NAME'] ?>
+                            <?php echo $associated5['GEN_NAME'] ?>
                         </p>
 
                         <?php 
@@ -160,12 +167,47 @@
                             $associated2 = mysqli_fetch_array($sql_associated2); $associa2 = $associated2['COM_GEN_CODE'];
                             $query3 = "SELECT GEN_NAME FROM GENERIC WHERE GENERIC.GEN_CODE = '$associa2;'";
                             $sql_gen = mysqli_query($conexao, $query3) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-                            $associated = mysqli_fetch_array($sql_gen);
+                            $associated6 = mysqli_fetch_array($sql_gen);
                         ?>
                         <p>
-                            <?php echo $associated['GEN_NAME'] ?>
+                            <?php echo $associated6['GEN_NAME'] ?>
                         </p>
                     </div>
+                </div>
+                <!-- Informação Mobile -->
+                <div class="col-md-12 col-sm-12 div-infos infos mobile">
+					<div>
+						<span>Nome: </span><p><?php echo $dado['MIS_NAME'] ?></p>
+					</div>
+					<div>
+						<span>Companhia: </span><p><?php echo $dado['MIS_COMPANY'] ?></p>
+                    </div>
+                    <div>
+						<span>Descrição: </span><p><?php echo $dado['MIS_DESCRIPTION'] ?></p>
+					</div>
+					<div>
+						<span>Origem: </span><p><?php echo $dado['MIS_LOCAL'] ?></p>
+					</div>
+					<div>
+						<span>Destino: </span><p><?php echo $dado['MIS_DESTINY'] ?></p>
+					</div>
+					<div>
+						<span>Objetivo: </span><p><?php echo $dado['MIS_OBJECTIVE'] ?></p>
+					</div>
+					<div>
+						<span>Data: </span><p><?php echo $dado['MIS_DATE'] ?></p>
+					</div>
+					<div>
+                        <span>Associateds: </span>
+                        <p>
+                            <? if(!empty($associated1['GEN_NAME'])) { ?><?php echo $associated1['GEN_NAME'] ?><? } ?><br>
+                            <? if(!empty($associated2['GEN_NAME'])) { ?><?php echo $associated2['GEN_NAME'] ?><? } ?><br>
+                            <? if(!empty($associated3['GEN_NAME'])) { ?><?php echo $associated3['GEN_NAME'] ?><? } ?><br>
+                            <? if(!empty($associated4['GEN_NAME'])) { ?><?php echo $associated4['GEN_NAME'] ?><? } ?><br>
+                            <? if(!empty($associated5['GEN_NAME'])) { ?><?php echo $associated5['GEN_NAME'] ?><? } ?><br>
+                            <? if(!empty($associated6['GEN_NAME'])) { ?><?php echo $associated6['GEN_NAME'] ?><? } ?><br>
+                        </p>
+					</div>
 				</div>
             <?php endwhile; ?>
         </div>

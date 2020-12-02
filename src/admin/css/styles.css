@@ -103,8 +103,6 @@ body {
 
 /* Página Inicial Administrativo */
 .section-general {
-    width: 100%;
-    height: 100%;
     background-image: linear-gradient( rgba(0,0,0,0.5), transparent);
 }
 
@@ -115,7 +113,8 @@ body {
 .section-crud {
     display: flex;
     flex-wrap: wrap;
-}
+    padding: 30px;
+    height: 100%;}
 
 .menu-top {
     margin: auto;
@@ -187,22 +186,18 @@ body {
 }
 
 .div-form {
-    max-width: 47.7%!important;
-    margin: 20px 0px 10px 20px;
     display: block;
     color: #fff;
-    background-color: rgb(49, 49, 49);
+    background-color: rgba(49, 49, 49, 0.9);
     border-top: 2px solid #fff;
     border-radius: 2px;
     padding-right: 0px!important;
     padding-left: 0px!important;
 }
 .div-info {
-    max-width: 47.7%!important;
     display: block;
-    margin: 20px 20px 10px 20px;
     color: #fff;
-    background-color: rgb(49, 49, 49);
+    background-color: rgba(49, 49, 49, 0.9);
     border-top: 2px solid #fff;
     border-radius: 2px;
     padding-right: 0px!important;
@@ -246,8 +241,8 @@ body {
 }
 
 .select-form {
-    margin: 20px 0px;
-    width: 50%;
+    margin: 10px 0px;
+    width: 49%!important;
     padding: 4px;
 }
 

@@ -8,6 +8,7 @@
 
     <!-- Css -->
     <link rel="stylesheet" href="../../src/admin/css/styles.css">
+    <link rel="stylesheet" href="../../src/admin/css/responsive.css">
     <!-- Flaticon -->
     <link rel="shortcut icon" href="../../src/admin/images/icon.png" />
     <!-- Bootstrap Css -->

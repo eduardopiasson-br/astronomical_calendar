@@ -7,6 +7,7 @@
 
     <!-- Css -->
     <link rel="stylesheet" href="../src/admin/css/styles.css">
+    <link rel="stylesheet" href="../src/admin/css/responsive.css">
     <!-- Bootstrap Css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- Flaticon -->
@@ -26,72 +27,90 @@
 </head>
 
 <body>
+    <!-- Conexão com banco para trazer as informações já cadastradas -->
     <?php
-        ini_set('default_charset', 'UTF-8');
+    ini_set('default_charset', 'UTF-8');
 
-        error_reporting(0);
-        include_once("../config/conectar.php");
-        
-        $query = 'SELECT GEN_NAME, GEN_CODE FROM GENERIC INNER JOIN GALAXYS ON GENERIC.GEN_CODE = GALAXYS.GAL_GEN_CODE;';
-        $sql_info_gal = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+    error_reporting(0);
+    include_once("../config/conectar.php");
 
-        include_once 'login/validlogin.php';
+    $query = 'SELECT GEN_NAME, GEN_CODE FROM GENERIC INNER JOIN GALAXYS ON GENERIC.GEN_CODE = GALAXYS.GAL_GEN_CODE;';
+    $sql_info_gal = mysqli_query($conexao, $query) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+
+    include_once 'login/validlogin.php';
     ?>
-    <section class="section-crud">
-        <!-- Formulário -->
-        <div class="col-md-6 div-form">
-            <? if(isset($_GET['edit'])){ ?>
-                <h3><button title="Retornar ao Menu Principal" onclick="location.href='index.php';">Menu</button>Editar</h3>
-            <? } else { ?>
-                <h3><button title="Retornar ao Menu Principal" onclick="location.href='index.php';">Menu</button>Cadastrar</h3>
-            <? } ?>
-            <?php
-                if (isset($_GET['edit'])) {
-                    $codigo = $_GET['edit'];
-                    $query1 = "SELECT * FROM GENERIC WHERE GEN_CODE = '$codigo' ";
-                    $sql_edit1 = mysqli_query($conexao, $query1) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-                    $DATA_GEN = mysqli_fetch_array($sql_edit1);
 
-                    // $GEN_CODE = $DATA_GAL['GAL_GEN_CODE'];
-                    $query2 = "SELECT * FROM GALAXYS WHERE GAL_GEN_CODE = '$codigo' ";
-                    $sql_edit2 = mysqli_query($conexao, $query2) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-                    $DATA_GAL = mysqli_fetch_array($sql_edit2);
-                }
+    <!-- Seção geral  -->
+    <section class="section-crud row">
+
+        <!-- div Formulário -->
+        <div class="col-md-6 col-sm-12 col-12 div-form">
+            <? if(isset($_GET['edit'])){ ?>
+            <h3><button title="Retornar ao Menu Principal" onclick="location.href='index.php';">Menu</button><span>Editar</span></h3>
+            <? } else { ?>
+            <h3><button title="Retornar ao Menu Principal" onclick="location.href='index.php';">Menu</button><span>Cadastrar</span></h3>
+            <? } ?>
+
+            <!-- Caso esteja realizando uma edição/update, carrega os dados necessários -->
+            <?php
+            if (isset($_GET['edit'])) {
+                $codigo = $_GET['edit'];
+                $query1 = "SELECT * FROM GENERIC WHERE GEN_CODE = '$codigo' ";
+                $sql_edit1 = mysqli_query($conexao, $query1) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+                $DATA_GEN = mysqli_fetch_array($sql_edit1);
+
+                // $GEN_CODE = $DATA_GAL['GAL_GEN_CODE'];
+                $query2 = "SELECT * FROM GALAXYS WHERE GAL_GEN_CODE = '$codigo' ";
+                $sql_edit2 = mysqli_query($conexao, $query2) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
+                $DATA_GAL = mysqli_fetch_array($sql_edit2);
+            }
             ?>
+
+            <!-- Formulário de cadastro -->
             <form name="Cadastro" action="../cadastros/galaxys.php" method="POST">
+
+                <!-- Se estiver editando/tualizando traz os dados do id -->
                 <? if(isset($_GET['edit'])){ ?>
-                    <input type="number" hidden name='GEN_CODE' value="<?php echo $DATA_GEN['GEN_CODE'] ?>">
-                    <input type="number" hidden name='GAL_CODE' value="<?php echo $DATA_GAL['GAL_CODE'] ?>">
+                <input type="number" hidden name='GEN_CODE' value="<?php echo $DATA_GEN['GEN_CODE'] ?>">
+                <input type="number" hidden name='GAL_CODE' value="<?php echo $DATA_GAL['GAL_CODE'] ?>">
                 <? } ?>
-                    <label>Nome </label>
-                    <input type="text" name="GEN_NAME" placeholder="Informe o nome da Galáxia" value="<?php echo $DATA_GEN['GEN_NAME'] ?>"><br>
-                    <label>Descrição </label>
-                    <textarea class="col-md-12" type="text" placeholder="Descreva detalhes da Galáxia" name="GEN_DESCRIPTION"><?php echo $DATA_GEN['GEN_DESCRIPTION'] ?></textarea><br>
-                    <label>Distância da Terra </label>
-                    <input type="NUMBER" placeholder="Informe a distância da Galáxia com relação ao Planeta Terra" name="GEN_DISTANCE" value="<?php echo $DATA_GEN['GEN_DISTANCE'] ?>"><br>
-                    <label>Massa </label>
-                    <input type="NUMBER" placeholder="Informe a massa da Galáxia" name="GEN_MASS" value="<?php echo $DATA_GEN['GEN_MASS'] ?>"><br>
-                    <label>Quantidade de Estrelas </label>
-                    <input type="NUMBER" placeholder="Informe a quantidade de estrelas" name="GAL_STARS" value="<?php echo $DATA_GAL['GAL_STARS'] ?>"><br>
-                    <label>Diâmetro </label>
-                    <input type="NUMBER" placeholder="Informe o diâmetro da Galáxia" name="GAL_DIAMETER" value="<?php echo $DATA_GAL['GAL_DIAMETER'] ?>"><br>
-                    <label>Espessura </label>
-                    <input type="NUMBER" placeholder="Informe a espessura da Galáxia" name="GAL_THICKNESS" value="<?php echo $DATA_GAL['GAL_THICKNESS'] ?>"><br>
-                    <br>
+
+                <label>Nome </label>
+                <input type="text" name="GEN_NAME" placeholder="Informe o nome da Galáxia" value="<?php echo $DATA_GEN['GEN_NAME'] ?>"><br>
+
+                <label>Descrição </label>
+                <textarea class="col-md-12" type="text" placeholder="Descreva detalhes da Galáxia" name="GEN_DESCRIPTION"><?php echo $DATA_GEN['GEN_DESCRIPTION'] ?></textarea><br>
+
+                <label>Distância da Terra (em AL)</label>
+                <input type="number" placeholder="Informe a distância da Galáxia com relação ao Planeta Terra" name="GEN_DISTANCE" value="<?php echo $DATA_GEN['GEN_DISTANCE'] ?>"><br>
+
+                <label>Massa (em KG)</label>
+                <input type="number" placeholder="Informe a massa da Galáxia" name="GEN_MASS" value="<?php echo $DATA_GEN['GEN_MASS'] ?>"><br>
+
+                <label>Quantidade de Estrelas </label>
+                <input type="number" placeholder="Informe a quantidade de estrelas" name="GAL_STARS" value="<?php echo $DATA_GAL['GAL_STARS'] ?>"><br>
+
+                <label>Diâmetro (em AL)</label>
+                <input type="number" placeholder="Informe o diâmetro da Galáxia" name="GAL_DIAMETER" value="<?php echo $DATA_GAL['GAL_DIAMETER'] ?>"><br>
+
+                <label>Espessura (em AL)</label>
+                <input type="number" placeholder="Informe a espessura da Galáxia" name="GAL_THICKNESS" value="<?php echo $DATA_GAL['GAL_THICKNESS'] ?>"><br><br>
+
+                <!-- Opções do formulário -->
                 <? if(!isset($_GET['edit'])){ ?>
-                    <input title="Salvar dados Inseridos" class="btn-form green" type="submit" name="enviar" value="Salvar">
-                    <input title="Limpar dados Inseridos" class="btn-form yellow" type="reset" name="reset" value="Limpar">
+                <input title="Salvar dados Inseridos" class="btn-form green" type="submit" name="enviar" value="Salvar">
+                <input title="Limpar dados Inseridos" class="btn-form yellow" type="reset" name="reset" value="Limpar">
                 <? } else { ?>
-                    <input title="Salvar dados Modificados" class="btn-form green" type="submit" name="edit" value="Atualizar">
-                    <input title="Limpar dados Inseridos" class="btn-form yellow" type="reset" name="reset" value="Limpar">
-                    <input title="Voltar para Galaxias" class="btn-form blue" type="button" onclick="location.href='galaxys.php';" value="Voltar">
+                <input title="Salvar dados Modificados" class="btn-form green" type="submit" name="edit" value="Atualizar">
+                <input title="Limpar dados Inseridos" class="btn-form yellow" type="reset" name="reset" value="Limpar">
+                <input title="Voltar para Galaxias" class="btn-form blue" type="button" onclick="location.href='galaxys.php';" value="Voltar">
                 <? } ?>
             </form>
 
         </div>
 
         <!-- Dados Cadastrados -->
-        <div class="col-md-6 div-info">
+        <div class="col-md-6 col-sm-12 col-12 div-info">
             <h3>Galáxias Cadastradas</h3>
             <div class="table">
                 <table>

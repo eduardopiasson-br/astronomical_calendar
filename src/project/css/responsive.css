@@ -1,0 +1,35 @@
+@media (max-width:768px){
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
+    .mobile span {
+        color: #FFC312;
+        font-size: 25px;
+    }
+    .div-infos {
+        border-top: 4px solid #FFC312;
+        border-radius: 5px;
+        margin-bottom: 25px;
+        background-color: rgba(0,0,0,0.9);
+    }
+    .menu-menu {
+        position: absolute!important;
+        right: 8px!important;
+        width: 40px!important;
+    }
+    .dropdown-content a {
+        background-color: rgba(0,0,0,0.9);
+    }
+}
+@media (max-width:425px){
+    html,body {
+        background-image: url(../images/background-mobile.jpg);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100%;
+        font-family: 'Goldman', cursive!important;
+    }
+}

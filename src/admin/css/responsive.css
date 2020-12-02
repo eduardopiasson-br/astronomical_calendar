@@ -1,0 +1,46 @@
+@media (max-width:768px){
+    body {
+        line-height: 1.2;
+    }
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
+    .menu-user {
+        position: relative;
+        margin: 0 auto;
+    }
+    .div-form {
+        max-width: 100%!important;
+    }
+    .div-info {
+        max-width: 100%!important;
+    }
+    .div-form h3 {
+        text-align: right!important;
+    }
+    .section-crud {
+        padding: 15px!important;
+    }
+    .div-info {
+        margin: 30px 0px 0px!important;
+    }
+    .select-form {
+        width: 100%!important;
+    }
+}
+@media (max-width:425px){
+    html,body {
+        background-image: url(../images/background-mobile.jpg);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100%;
+        font-family: 'Goldman', cursive!important;
+        background-color: transparent!important;
+    }
+    .menu-item {
+        max-width: 100%!important;
+    }
+}

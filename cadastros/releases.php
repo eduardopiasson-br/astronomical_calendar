@@ -1,6 +1,7 @@
 <?php
 include_once("../config/conectar.php");
 
+// Função Deletar
 if(isset($_GET['tabela_rel']) && isset($_GET['nomepk_rel']) && isset($_GET['codigo_rel']) && isset($_GET['origem'])){
     $tabela_rel = $_GET['tabela_rel'];
 	$nomepk_rel = $_GET['nomepk_rel'];
@@ -22,6 +23,8 @@ if(isset($_GET['tabela_rel']) && isset($_GET['nomepk_rel']) && isset($_GET['codi
         window.location="../gerenciar/releases.php";
     </script>
     <?php
+
+    // Função Editar
 } else if(isset($_POST['edit'])){
 
     ini_set('default_charset','UTF-8');
@@ -73,6 +76,8 @@ if(isset($_GET['tabela_rel']) && isset($_GET['nomepk_rel']) && isset($_GET['codi
     </script>
   
     <?php
+
+    // Função Salvar
 } else if (isset($_POST['enviar'])){
 
     $REL_CODE = $_POST['REL_CODE'];

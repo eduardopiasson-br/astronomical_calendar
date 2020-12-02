@@ -1,5 +1,6 @@
 <?php
 
+// Verifica se foi passada uma data senão traz a data corrente
 if (isset($_POST['date'])) {
 	$date = $_POST['DATE'];
 	$new_date = explode("-", $date);
@@ -13,17 +14,26 @@ if (isset($_POST['date'])) {
 	$day = date('d');
 };
 
+// Caso o utilizador clique em algum dia do calendário mensal
 if (isset($_GET['dia'])) {
 	$day = $_GET['dia'];
 }
 
+// Função que gera os dias da semana
 function MostreSemanas()
 {
-	$weeks = "DSTQQSS";
+	$weeks = array(
+		"Dom",
+		"Seg",
+		"Ter",
+		"Qua",
+		"Qui",
+		"Sex",
+		"Sab"
+	);
 
 	for ($i = 0; $i < 7; $i++)
-		echo "<th>" . $weeks{
-		$i} . "</th>";
+		echo "<th>" . $weeks{$i} . "</th>";
 }
 
 function GetNumeroDias($month = NULL, $year = NULL)
@@ -40,41 +50,25 @@ function GetNumeroDias($month = NULL, $year = NULL)
 	return $num_days[$month];
 }
 
+// função que carrega o calendário conforme a data passada pelo utilizador
 function MostreCalendario($day = NULL, $month = NULL, $year = NULL, $conexao)
 {
-	$num_days = GetNumeroDias($month, $year);	// retorna o n�mero de dias que tem o mes desejado
+	$num_days = GetNumeroDias($month, $year);	// retorna o numero de dias que tem o mes
 	$current_day = 0;
 
-	error_reporting(0);
-	include_once("../config/conectar.php");
+	// função para descobrir o dia da semana 
+	$day_week = jddayofweek(cal_to_jd(CAL_GREGORIAN, $month, '01', $year), 0);
 
-	$query_phenomena = "SELECT * FROM PHENOMENA WHERE PHE_DATE = '$year-$month-$day'";
-	$sql_info_phenomena = mysqli_query($conexao, $query_phenomena) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-	$phenomena = mysqli_fetch_assoc($sql_info_phenomena);
-
-	$query_mission = "SELECT * FROM MISSIONS WHERE MIS_DATE = '$year-$month-$day'";
-	$sql_info_mission = mysqli_query($conexao, $query_mission) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-	$missions = mysqli_fetch_assoc($sql_info_mission);
-
-	$query_releases = "SELECT * FROM RELEASES WHERE REL_DATE = '$year-$month-$day'";
-	$sql_info_releases = mysqli_query($conexao, $query_releases) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
-	$releases = mysqli_fetch_assoc($sql_info_releases);
-
-	$data = array(
-		'phenomena' => $phenomena,
-		'missions' => $missions,
-		'releases' => $releases
-	);
-
-	$day_week = jddayofweek(cal_to_jd(CAL_GREGORIAN, $month, '01', $year), 0);	// fun��o que descobre o dia da semana
-
+	// abertura da table para formar o calendário
 	echo "<table>";
 
 	echo "<tr class='day-name'>";
-	MostreSemanas();	// fun��o que mostra as semanas aqui
+	// Chamada da função para buscar as semanas
+	MostreSemanas();	
+
+	// Código que gera o calendário
 	echo "</tr>";
 	for ($line = 0; $line < 6; $line++) {
-
 
 		echo "<tr>";
 
@@ -96,9 +90,7 @@ function MostreCalendario($day = NULL, $month = NULL, $year = NULL, $conexao)
 			}
 			echo " >";
 
-
-			/* TRECHO IMPORTANTE: APARTIR DESTE TRECHO � MOSTRADO UM DIA DO CALEND�RIO (MUITA ATEN��O NA HORA DA MANUTEN��O) */
-
+			// Nessa parte do código é onde cada dia é tratado, onde também são realizadas as buscas de existência de eventos para adicionar os marcadores nas datas referentes
 			if ($current_day + 1 <= $num_days) {
 				if ($column < $day_week && $line == 0) {
 					echo " ";
@@ -117,7 +109,9 @@ function MostreCalendario($day = NULL, $month = NULL, $year = NULL, $conexao)
 					$sql_info_releases = mysqli_query($conexao, $query_releases) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
 					$releases = mysqli_fetch_assoc($sql_info_releases);
 
+					// Aqui onde o dia é exibido
 					echo "<a class='day-calendar' href = " . $_SERVER["PHP_SELF"] . "?dia=" . ($current_day + 1) . ">" . ++$current_day . "</a>";
+					// if de verificação para cada cor do marcador do calendário
 					if (!empty($phenomena)) {
 						echo "<span class='event' style='background-color:#da5f5f;'></span>";
 					}
@@ -131,10 +125,7 @@ function MostreCalendario($day = NULL, $month = NULL, $year = NULL, $conexao)
 			} else {
 				break;
 			}
-
-			/* FIM DO TRECHO MUITO IMPORTANTE */
-
-
+			// finalizado trecho do codigo referente a cada dia
 
 			echo "</td>";
 		}
@@ -142,26 +133,7 @@ function MostreCalendario($day = NULL, $month = NULL, $year = NULL, $conexao)
 	}
 
 	echo "</table>";
-	return $data;
-}
-
-function MostreCalendarioCompleto()
-{
-	echo "<table>";
-	$cont = 1;
-	for ($j = 0; $j < 4; $j++) {
-		echo "<tr>";
-		for ($i = 0; $i < 3; $i++) {
-
-			echo "<td>";
-			MostreCalendario(($cont < 10) ? "0" . $cont : $cont);
-
-			$cont++;
-			echo "</td>";
-		}
-		echo "</tr>";
-	}
-	echo "</table>";
+	// fechamento da tabela acima
 }
 
 ?>
@@ -176,7 +148,7 @@ function MostreCalendarioCompleto()
 	<!-- Css -->
 	<link rel="stylesheet" href="../src/project/css/styles.css">
 	<link rel="stylesheet" href="../src/project/css/calendar.css">
-	<!-- <link rel="stylesheet" href="../src/project/css/solar_system.css"> -->
+	<link rel="stylesheet" href="../src/project/css/responsive.css">
 	<!-- Bootstrap Css -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<!-- Flaticon -->
@@ -190,6 +162,7 @@ function MostreCalendarioCompleto()
 
 <body>
 
+	<!-- Onde é realizada a busca dos eventos que ocorrem na data selecionada -->
 	<?php
 	ini_set('default_charset', 'UTF-8');
 
@@ -208,10 +181,15 @@ function MostreCalendarioCompleto()
 	$sql_info_releases = mysqli_query($conexao, $query_releases) or die('ERRO - Não foi possível executar a Query: ' . mysqli_error($conexao));
 	?>
 
+	<!-- Seçao de menu -->
 	<section class="row top-menu">
+
+		<!-- Divs menu e de recarga -->
 		<div class="col-md-11 col-sm-11 title-menu">
+			<a class="button-calendar" href="index.php" title="Recarregar" style="margin-left: 30px;"> <i class="fas fa-redo"></i> Recarregar</a>
 			<h1>Calendário Astronômico</h1>
 		</div>
+
 		<div class="col-md-1 col-sm-1 menu-menu">
 			<div class="dropdown">
 				<button class="dropbtn"><i class="fas fa-caret-square-down"></i></button>
@@ -228,9 +206,13 @@ function MostreCalendarioCompleto()
 				</div>
 			</div>
 		</div>
+
 	</section>
 
-	<section class="row">
+	<!-- Section principal onde são exibidos os dados -->
+	<section class="row section-index">
+
+		<!-- div contendo o calendário -->
 		<div class="col-md-7 col-12 col-sm-12">
 			<div class="form-index">
 				<form action="index.php" method="POST">
@@ -238,9 +220,13 @@ function MostreCalendarioCompleto()
 					<input class="button-calendar button-form" title="Selecionar Data" class="btn-form-index" type="submit" name="date" value="Buscar">
 				</form>
 			</div>
+
+			<!-- chamada para o calendário com a data e o valor de conexão para não travar a função -->
 			<?php
 			MostreCalendario($day, $month, $year, $conexao);
 			?>
+
+			<!-- Informação referente as cores dos eventos -->
 			<div class="div-info-calendar">
 				<p>FENÔMENOS <span class='event' style='background-color:#da5f5f;'></span></p>
 				<p>MISSÕES <span class='event' style='background-color:#5a9ab2;'></span></p>
@@ -248,6 +234,8 @@ function MostreCalendarioCompleto()
 			</div>
 
 		</div>
+
+		<!-- Div onde são informados os eventos da data selecionada -->
 		<div class="col-md-5 col-sm-12 col-12 info-div-date">
 			<h2><?= "$day / $month / $year" ?></h2>
 			<?php while ($phenomena = mysqli_fetch_assoc($sql_info_phenomena)) :  ?>
